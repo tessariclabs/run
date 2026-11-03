@@ -1,61 +1,34 @@
-# Tessaric verify
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/tessaric-banner.svg">
+    <img src="assets/tessaric-banner-light.svg" alt="TESSARIC" height="40">
+  </picture>
+</p>
 
-Runs [Tessaric](https://tessaric.io) in GitHub Actions. Tessaric reads your repository's code and tests as they are, works out what every function owes (no undefined behaviour, no panic, every assertion holding, progress) and proves it, or shows the input that breaks it. Nothing of your code runs.
+Proves what your code does on every pull request: no undefined behaviour, no panic, every assertion holding. Nothing of your code runs.
 
 ```yaml
-name: tessaric
-on: [push, pull_request]
-jobs:
-  verify:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: tessariclabs/run@v0
+permissions:
+  contents: read
+  pull-requests: write   # for the one comment on the pull request
+
+steps:
+  - uses: actions/checkout@v4
+  - uses: tessariclabs/run@v0
 ```
 
-The step installs the release, restores its caches, runs `tessaric verify`, annotates the changed files with what can fail, and writes the report to the job summary. It needs no secret and no extra permission.
+**On the pull request:** one comment, edited on every run, one line unless something can fail. Notes on at most 10 lines that can fail.<br>
+**On the run page:** the full report, also kept as `tessaric-report.md` and `.json`.<br>
+**Caches:** the binary, toolchains, dependencies and workspace state, so later runs redo only what changed.
 
-## Inputs
-
-| Input | Effect | Default |
+| Input | Default | |
 | --- | --- | --- |
-| `version` | Release to install, as `X.Y.Z` or `latest`. A pinned version never updates itself. | `latest` |
-| `args` | Extra arguments for `tessaric verify`, for example `--require-baseline`. | empty |
-| `workspace` | The workspace directory, relative to the checkout. | `.` |
-| `baselines` | A file written by `tessaric export`, relative to the workspace, imported before `verify`. | empty |
-| `shard` | Run only shard `I` of `N` of the tests, as `I/N`. Spread one run over several jobs with a matrix. | empty |
-| `nothing-proved` | What a run that proved nothing yet (exit 3) does to the step: `fail` or `pass`. | `fail` |
-| `annotations` | Annotate files with what can fail (error), checks that failed (error), drift (warning) and problems in Tessaric itself (notice). | `true` |
-| `summary` | Write the report to the job summary. | `true` |
-| `cache` | Keep the caches below between runs. | `true` |
+| `version` | `latest` | release, as `X.Y.Z` |
+| `args` | | extra `tessaric verify` arguments |
+| `workspace` | `.` | workspace directory |
+| `baselines` | | file from `tessaric export` to import first |
+| `shard` | | `I/N`: one shard of the tests per job |
+| `nothing-proved` | `fail` | `pass` lets a run that proved nothing yet pass |
+| `comment`, `annotations`, `summary`, `upload-report`, `cache` | `true` | turn a part off |
 
-## Outputs
-
-| Output | Value |
-| --- | --- |
-| `exit-code` | The exit code of `tessaric verify`: 0 ok, 1 a check failed or an obligation can fail, 2 could not determine, 3 nothing was checked or nothing was proved yet, 130 interrupted. |
-| `version` | The release that ran. |
-
-## Caching
-
-A later run downloads, unpacks, fetches and proves again only what changed. Each layer is keyed by what changes it:
-
-| Layer | Holds | Kept until |
-| --- | --- | --- |
-| binary | the release itself | the version changes |
-| toolchains | the unpacked toolchains | the version changes; components are stored by content, so a new version reuses what it shares with the last |
-| dependencies | fetched crates and modules | a lockfile changes |
-| store | programs Tessaric built, by content | saved every run, per branch |
-| state | the workspace's `.tessaric`: ledger, compiled proofs, analysis | saved every run, per branch, falling back to the default branch |
-
-A failing run still saves its caches. Turn them off with `cache: false`.
-
-## Runners
-
-Releases are published for Linux x86_64 (`ubuntu-*`). The step names the platform when a release has no binary for the runner.
-
-## Versions
-
-`@v0` follows the latest `0.x` of this action. Pin an exact tag such as `@v0.1.0` for a build that never changes, and pin `version` for the Tessaric release.
-
-Documentation: https://tessaric.io/docs/ci
+Output `exit-code`: 0 ok, 1 something can fail or a check failed, 2 could not determine, 3 nothing proved yet. Runs on Linux x86_64 runners. Docs: [tessaric.io/docs/ci](https://tessaric.io/docs/ci)

@@ -1,0 +1,302 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="160" viewBox="0 0 760 160">
+  <title>TESSARIC</title>
+  <defs>
+    <linearGradient id="tsr-dark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a1c5c"/>
+      <stop offset="1" stop-color="#1a1130"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-bright" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffa03c"/>
+      <stop offset="1" stop-color="#ff5a2e"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-face-l" x1="0.85" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#e8506a"/>
+      <stop offset="0.5" stop-color="#a33392"/>
+      <stop offset="1" stop-color="#6420b4"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff8048"/>
+      <stop offset="0.55" stop-color="#d04a65" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#852f6c" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-fade-hook-l" x1="0.35" y1="0.75" x2="0.65" y2="0.25">
+      <stop offset="0" stop-color="#ffb560"/>
+      <stop offset="0.55" stop-color="#ff8048"/>
+      <stop offset="0.9" stop-color="#d04a65" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-fade-hook-r" x1="0.65" y1="0.75" x2="0.35" y2="0.25">
+      <stop offset="0" stop-color="#ffb560"/>
+      <stop offset="0.55" stop-color="#ff8048"/>
+      <stop offset="0.9" stop-color="#d04a65" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-frame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff6c30"/>
+      <stop offset="0.5" stop-color="#c8407a"/>
+      <stop offset="1" stop-color="#7a22be"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-hook-l" x1="0.35" y1="0.75" x2="0.65" y2="0.25">
+      <stop offset="0" stop-color="#ff6c5e"/>
+      <stop offset="0.55" stop-color="#c23c78"/>
+      <stop offset="1" stop-color="#3a1c50"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-hook-r" x1="0.65" y1="0.75" x2="0.35" y2="0.25">
+      <stop offset="0" stop-color="#ff6c5e"/>
+      <stop offset="0.55" stop-color="#c23c78"/>
+      <stop offset="1" stop-color="#3a1c50"/>
+    </linearGradient>
+    <radialGradient id="tsr-o-side-l" cx="1" cy="0.25" r="1.05">
+      <stop offset="0" stop-color="#ff8a26"/>
+      <stop offset="0.45" stop-color="#f0573f"/>
+      <stop offset="0.75" stop-color="#c03a7c"/>
+      <stop offset="1" stop-color="#8a1fb0"/>
+    </radialGradient>
+    <radialGradient id="tsr-o-side-r" cx="0" cy="0.25" r="1.05">
+      <stop offset="0" stop-color="#ff8a26"/>
+      <stop offset="0.45" stop-color="#f0573f"/>
+      <stop offset="0.75" stop-color="#c03a7c"/>
+      <stop offset="1" stop-color="#8a1fb0"/>
+    </radialGradient>
+    <linearGradient id="tsr-o-stroke-l-dim" x1="0.85" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#ffb060"/>
+      <stop offset="0.4" stop-color="#fe7a42"/>
+      <stop offset="1" stop-color="#f45a4c"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-stroke-l-hot" x1="0.85" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#ffe796"/>
+      <stop offset="0.3" stop-color="#ffa64a"/>
+      <stop offset="0.65" stop-color="#fe7a40"/>
+      <stop offset="1" stop-color="#fd6042"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-stroke-pink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#da545d"/>
+      <stop offset="1" stop-color="#cf4f60"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-stroke-r-dim" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#ffb060"/>
+      <stop offset="0.4" stop-color="#fe7a42"/>
+      <stop offset="1" stop-color="#f45a4c"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-stroke-r-hot" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#ffe796"/>
+      <stop offset="0.3" stop-color="#ffa64a"/>
+      <stop offset="0.65" stop-color="#fe7a40"/>
+      <stop offset="1" stop-color="#fd6042"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-stroke-top-dim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff7a40"/>
+      <stop offset="1" stop-color="#ffa050"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-stroke-top-hot" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff9238"/>
+      <stop offset="0.55" stop-color="#ffad4c"/>
+      <stop offset="1" stop-color="#ffe796"/>
+    </linearGradient>
+    <radialGradient id="tsr-o-top" cx="0.5" cy="1" r="1">
+      <stop offset="0" stop-color="#ffa232"/>
+      <stop offset="0.5" stop-color="#fe7a31"/>
+      <stop offset="1" stop-color="#fe5232"/>
+    </radialGradient>
+    <linearGradient id="tsr-o-top-dim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8f2e80"/>
+      <stop offset="1" stop-color="#d64068"/>
+    </linearGradient>
+    <linearGradient id="tsr-o-top-warm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff6a2e"/>
+      <stop offset="1" stop-color="#f0535f"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-face-l" x1="0.85" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#b058fc"/>
+      <stop offset="0.5" stop-color="#7a34d8"/>
+      <stop offset="1" stop-color="#4a24a0"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-face-r" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#b058fc"/>
+      <stop offset="0.5" stop-color="#7a34d8"/>
+      <stop offset="1" stop-color="#4a24a0"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b47cf6"/>
+      <stop offset="1" stop-color="#6a34c0" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6c2cb0"/>
+      <stop offset="0.45" stop-color="#2c1650"/>
+      <stop offset="1" stop-color="#110e22"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-side-l" x1="0.85" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#8a40e6"/>
+      <stop offset="0.55" stop-color="#4a2286"/>
+      <stop offset="1" stop-color="#1c1238"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-side-r" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#8a40e6"/>
+      <stop offset="0.55" stop-color="#4a2286"/>
+      <stop offset="1" stop-color="#1c1238"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-stroke-l-dim" x1="0.85" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#a070f0"/>
+      <stop offset="1" stop-color="#6c3cc0"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-stroke-l-hot" x1="0.85" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#e6b4fd"/>
+      <stop offset="0.35" stop-color="#b07bff"/>
+      <stop offset="1" stop-color="#7440cc"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-stroke-r-dim" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#a070f0"/>
+      <stop offset="1" stop-color="#6c3cc0"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-stroke-r-hot" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#e6b4fd"/>
+      <stop offset="0.35" stop-color="#b07bff"/>
+      <stop offset="1" stop-color="#7440cc"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-stroke-top-dim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7a44c8"/>
+      <stop offset="1" stop-color="#a070f0"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-stroke-top-hot" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9058f0"/>
+      <stop offset="1" stop-color="#e6b4fd"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-stroke-top-pink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7530af"/>
+      <stop offset="0.6" stop-color="#c050b0"/>
+      <stop offset="1" stop-color="#f8708a"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-top" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5e2cae"/>
+      <stop offset="1" stop-color="#a64bff"/>
+    </linearGradient>
+    <linearGradient id="tsr-v-top-dim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a1a62"/>
+      <stop offset="1" stop-color="#6d2bb3"/>
+    </linearGradient>
+    <filter id="tsr-glow" filterUnits="userSpaceOnUse" x="0" y="0" width="2048" height="2048" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="28" result="wide"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="near"/>
+      <feComponentTransfer in="wide" result="wide-a"><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+      <feComponentTransfer in="near" result="near-a"><feFuncA type="linear" slope="0.45"/></feComponentTransfer>
+      <feMerge><feMergeNode in="wide-a"/><feMergeNode in="near-a"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="tsr-word" gradientUnits="userSpaceOnUse" x1="199.9" y1="0" x2="719.4" y2="0"><stop offset="0" stop-color="#ff9a34"/><stop offset="0.38" stop-color="#f65a3e"/><stop offset="0.7" stop-color="#c23c7c"/><stop offset="1" stop-color="#8e44ea"/></linearGradient>
+    <linearGradient id="tsr-word-edge" gradientUnits="userSpaceOnUse" x1="199.9" y1="0" x2="719.4" y2="0"><stop offset="0" stop-color="#ffd08a"/><stop offset="0.5" stop-color="#ff9fae"/><stop offset="1" stop-color="#d9b4ff"/></linearGradient>
+  </defs>
+  <g id="tsr-mark" filter="url(#tsr-glow)" transform="translate(14.11 -6.22) scale(0.08419)" stroke-width="13" stroke-linejoin="round" fill-rule="evenodd">
+    <!-- thin violet plate between the left cube and the left hook (mostly hidden) -->
+    <g class="piece inner" id="p-plate-left" style="--ex:565.9px;--ey:41.9px">
+      <path d="M457.6 918.9 545.2 967.1 457.6 1015.4 370 967.1Z" fill="none" stroke="url(#tsr-v-stroke-top-dim)"/>
+    </g>
+    <!-- thin pink plate between the right cube and the right hook (mostly hidden) -->
+    <g class="piece inner" id="p-plate-right" style="--ex:-565.9px;--ey:41.9px">
+      <path d="M1589.3 918.9 1676.9 967.1 1589.3 1015.4 1501.7 967.1Z" fill="none" stroke="url(#tsr-o-stroke-pink)"/>
+    </g>
+    <!-- violet cage bar over the core's top-left edge, leg down its left edge -->
+    <g class="piece inner" id="p-ring-left" style="--ex:229.9px;--ey:175px">
+      <path d="M953.6 722 746.6 836 746.6 1010.2 690.8 1041 690.8 807.5 953.6 662.7Z" fill="url(#tsr-v-side-r)"/>
+      <path d="M746.6 1010.2 690.8 1041 690.8 807.5 953.6 662.7 953.6 722" fill="none" stroke="url(#tsr-v-stroke-r-hot)"/>
+      <path d="M690.8 807.5 633.4 775.9 633.4 1009.3 690.8 1041Z" fill="url(#tsr-v-face-l)" stroke="url(#tsr-v-stroke-l-hot)"/>
+      <path d="M690.8 807.5 633.4 775.9 896.2 631.1 953.6 662.7Z" fill="url(#tsr-v-top)" stroke="url(#tsr-v-stroke-top-hot)"/>
+    </g>
+    <!-- top slab, the back corner of the top layer -->
+    <g class="piece" id="p-slab" style="--ex:0px;--ey:294.7px">
+      <path d="M1274.5 480.8 1023.5 619.2 1023.5 499.6 1274.5 361.2Z" fill="url(#tsr-v-side-r)" stroke="url(#tsr-o-fade)"/>
+      <path d="M772.4 480.8 1023.5 619.2 1023.5 499.6 772.4 361.2Z" fill="url(#tsr-v-side-l)" stroke="url(#tsr-o-fade)"/>
+      <path d="M1023.5 222.9 1274.5 361.2 1023.5 499.6 772.4 361.2Z" fill="url(#tsr-o-top-warm)" stroke="url(#tsr-o-stroke-top-hot)"/>
+    </g>
+    <!-- orange n bracket between the slab and the left cube -->
+    <g class="piece inner" id="p-bracket" style="--ex:257.4px;--ey:477.9px">
+      <path d="M689.3 523.6 748.2 491.2 748.2 544.2 689.3 576.7Z" fill="url(#tsr-dark)"/>
+      <path d="M900.6 598.6 841.7 631 841.7 553.8 900.6 521.3Z" fill="url(#tsr-dark)"/>
+      <path d="M689.3 523.6 799.2 584.2 799.2 607.6 841.7 631 841.7 553.8 631.4 438 631.4 544.8 689.3 576.7Z" fill="url(#tsr-o-face-l)"/>
+      <path d="M841.7 631 841.7 553.8 631.4 438 631.4 544.8 689.3 576.7" fill="none" stroke="url(#tsr-o-stroke-l-dim)"/>
+      <path d="M900.6 521.3 841.7 553.8 631.4 438 690.4 405.5Z" fill="url(#tsr-o-top-warm)" stroke="url(#tsr-o-stroke-top-dim)"/>
+    </g>
+    <!-- violet bar between the slab and the right cube, with unlit sides -->
+    <g class="piece inner" id="p-bar" style="--ex:-253.4px;--ey:465.6px">
+      <path d="M1439.8 539.4 1172.8 686.5 1172.8 583.8 1439.8 436.7Z" fill="url(#tsr-dark)" stroke="url(#tsr-v-fade)"/>
+      <path d="M1113.9 654 1172.8 686.5 1172.8 583.8 1113.9 551.3Z" fill="url(#tsr-dark)" stroke="url(#tsr-v-fade)"/>
+      <path d="M1380.9 404.3 1439.8 436.7 1172.8 583.8 1113.9 551.3Z" fill="url(#tsr-v-top)" stroke="url(#tsr-v-stroke-top-dim)"/>
+    </g>
+    <!-- orange cage bar over the core's top-right edge, leg down its right edge -->
+    <g class="piece inner" id="p-ring-right" style="--ex:-229.8px;--ey:175px">
+      <path d="M1304.9 1012.8 1355.9 1040.9 1355.9 807.1 1093.5 662.6 1093.5 721.6 1304.9 838Z" fill="url(#tsr-o-face-l)"/>
+      <path d="M1304.9 1012.8 1355.9 1040.9 1355.9 807.1 1093.5 662.6 1093.5 721.6" fill="none" stroke="url(#tsr-o-stroke-l-hot)"/>
+      <path d="M1355.9 807.1 1413.1 775.6 1413.1 1009.4 1355.9 1040.9Z" fill="url(#tsr-o-bright)" stroke="url(#tsr-o-stroke-r-hot)"/>
+      <path d="M1413.1 775.6 1355.9 807.1 1093.5 662.6 1150.7 631.1Z" fill="url(#tsr-o-top)" stroke="url(#tsr-o-stroke-top-hot)"/>
+    </g>
+    <!-- orange cage leg under the core's right edge, with a foot -->
+    <g class="piece inner" id="p-ring-foot" style="--ex:-299.2px;--ey:-177.3px">
+      <path d="M1304.2 1183.6 1358.5 1213.5 1358.5 1120.7 1304.2 1090.7Z" fill="url(#tsr-dark)"/>
+      <path d="M1358.3 1060.9 1412.6 1090.9 1358.5 1120.7 1304.2 1090.7Z" fill="url(#tsr-dark)"/>
+      <path d="M1232.6 1285.7 1286.9 1315.6 1286.9 1252.9 1232.6 1223Z" fill="url(#tsr-dark)"/>
+      <path d="M1304.2 1183.6 1358.5 1213.5 1286.9 1252.9 1232.6 1223Z" fill="url(#tsr-o-top-dim)" stroke="url(#tsr-o-stroke-top-dim)"/>
+      <path d="M1358.5 1213.5 1358.5 1120.7 1412.6 1090.9 1412.6 1246.3 1286.9 1315.6 1286.9 1252.9Z" fill="url(#tsr-o-side-r)" stroke="url(#tsr-o-stroke-r-dim)"/>
+    </g>
+    <!-- orange pillar, bottom left -->
+    <g class="piece inner" id="p-pillar-left" style="--ex:279.3px;--ey:-513.8px">
+      <path d="M798.8 1634.1 743.1 1664.8 743.1 1445.1 798.8 1414.4Z" fill="url(#tsr-dark)"/>
+      <path d="M689.5 1635.2 743.1 1664.8 743.1 1445.1 689.5 1415.5Z" fill="url(#tsr-o-face-l)" stroke="url(#tsr-o-stroke-l-dim)"/>
+      <path d="M745.1 1384.9 798.8 1414.4 743.1 1445.1 689.5 1415.5Z" fill="url(#tsr-o-top-dim)" stroke="url(#tsr-o-stroke-top-dim)"/>
+    </g>
+    <!-- violet pillar, bottom right -->
+    <g class="piece inner" id="p-pillar-right" style="--ex:-280.1px;--ey:-513.5px">
+      <path d="M1248.1 1633.6 1304.6 1664.8 1304.6 1445.3 1248.1 1414.2Z" fill="url(#tsr-dark)"/>
+      <path d="M1359 1634.8 1304.6 1664.8 1304.6 1445.3 1359 1415.4Z" fill="url(#tsr-v-side-r)" stroke="url(#tsr-v-stroke-r-hot)"/>
+      <path d="M1302.5 1384.3 1359 1415.4 1304.6 1445.3 1248.1 1414.2Z" fill="url(#tsr-v-top)" stroke="url(#tsr-v-stroke-top-hot)"/>
+    </g>
+    <!-- violet cage under the core's front edges, leg up its left edge -->
+    <g class="piece" id="p-ring-bottom" style="--ex:-0.9px;--ey:49.2px">
+      <path d="M742.3 1185.2 688.2 1215 688.2 1120.1 742.3 1090.3Z" fill="url(#tsr-dark)"/>
+      <path d="M1024.3 1463.1 1024.3 1400.2 1244.2 1279 1244.2 1341.9Z" fill="url(#tsr-v-face-r)" stroke="url(#tsr-v-stroke-r-dim)"/>
+      <path d="M742.3 1185.2 1023.5 1340.1 1189.2 1248.7 1244.2 1279 1024.3 1400.2 688.2 1215Z" fill="url(#tsr-v-top-dim)" stroke="url(#tsr-v-stroke-top-pink)"/>
+      <path d="M1024.3 1463.1 1024.3 1400.2 688.2 1215 688.2 1120.1 634.5 1090.5 634.5 1248.3Z" fill="url(#tsr-v-face-l)" stroke="url(#tsr-v-stroke-l-dim)"/>
+    </g>
+    <!-- orange frame, lower left: a boot-shaped profile with a boot-shaped hole -->
+    <g class="piece" id="p-hook-left" style="--ex:270.9px;--ey:-152.6px">
+      <path d="M458.2 1345.6 613.7 1431.3 529.6 1477.6 374.1 1392Z" fill="url(#tsr-dark)"/>
+      <path d="M458.2 1345.6 374.1 1392 374.1 1162.1 458.2 1115.8Z" fill="url(#tsr-dark)"/>
+      <path d="M586.5 1359 670.6 1312.6 670.6 1527.1 586.5 1573.5Z" fill="url(#tsr-dark)"/>
+      <path d="M590 1268.2 506 1314.6 506 1169.7 590 1123.4Z" fill="url(#tsr-dark)"/>
+      <path d="M590 1123.4 506 1169.7 321.8 1068.3 405.9 1022Z" fill="url(#tsr-o-hook-l)" stroke="url(#tsr-o-fade-hook-l)"/>
+      <path d="M670.6 1312.6 586.5 1359 506 1314.6 590 1268.2Z" fill="url(#tsr-o-hook-l)" stroke="url(#tsr-o-stroke-top-dim)"/>
+      <path d="M321.8 1427.6 586.5 1573.5 586.5 1359 506 1314.6 506 1169.7 321.8 1068.3ZM374.1 1392 374.1 1162.1 450.5 1204.2 450.5 1351.4 529.6 1394.9 529.6 1477.6Z" fill="url(#tsr-o-face-l)" stroke="url(#tsr-o-stroke-l-dim)"/>
+    </g>
+    <!-- orange frame, lower right: the left hook mirrored -->
+    <g class="piece" id="p-hook-right" style="--ex:-270.5px;--ey:-153.3px">
+      <path d="M1588 1345.7 1673 1392.5 1518.4 1477.7 1433.4 1430.9Z" fill="url(#tsr-dark)"/>
+      <path d="M1588 1345.7 1673 1392.5 1673 1162.4 1588 1115.6Z" fill="url(#tsr-dark)"/>
+      <path d="M1462.1 1358.7 1377.1 1311.9 1377.1 1526.1 1462.1 1572.9Z" fill="url(#tsr-dark)"/>
+      <path d="M1457.9 1267.4 1542.9 1314.2 1542.9 1169.1 1457.9 1122.3Z" fill="url(#tsr-dark)"/>
+      <path d="M1542.9 1169.1 1457.9 1122.3 1640.8 1021.6 1725.8 1068.4Z" fill="url(#tsr-o-hook-r)" stroke="url(#tsr-o-fade-hook-r)"/>
+      <path d="M1457.9 1267.4 1542.9 1314.2 1462.1 1358.7 1377.1 1311.9Z" fill="url(#tsr-o-hook-r)" stroke="url(#tsr-o-stroke-top-dim)"/>
+      <path d="M1725.8 1427.7 1462.1 1572.9 1462.1 1358.7 1542.9 1314.2 1542.9 1169.1 1725.8 1068.4ZM1673 1392.5 1673 1162.4 1598.1 1203.7 1598.1 1351.4 1518.4 1395.3 1518.4 1477.7Z" fill="url(#tsr-o-frame)" stroke="url(#tsr-o-stroke-r-dim)"/>
+    </g>
+    <!-- violet corner wall at the bottom: two walls meeting at the front edge -->
+    <g class="piece" id="p-base" style="--ex:0px;--ey:-349.9px">
+      <path d="M1023.5 1825.3 1023.5 1602.2 1230.4 1488.2 1230.4 1711.3Z" fill="url(#tsr-v-side-r)" stroke="url(#tsr-v-stroke-r-hot)"/>
+      <path d="M1023.5 1825.3 1023.5 1602.2 816.9 1488.4 816.9 1711.5Z" fill="url(#tsr-v-side-l)" stroke="url(#tsr-v-stroke-l-hot)"/>
+      <path d="M1175.9 1458.2 1230.4 1488.2 1023.5 1602.2 816.9 1488.4 872.1 1458 1024.1 1541.8Z" fill="url(#tsr-v-top)" stroke="url(#tsr-v-stroke-top-hot)"/>
+    </g>
+    <!-- orange cube, upper left, with a slot under its +X face -->
+    <g class="piece" id="p-cube-left" style="--ex:271.8px;--ey:148.6px">
+      <path d="M532.7 723 320.9 606.3 320.9 858.3 532.7 974.9Z" fill="url(#tsr-o-side-l)" stroke="url(#tsr-o-stroke-l-hot)"/>
+      <path d="M744.7 660.8 585.7 748.4 585.7 945.7 532.7 974.9 532.7 723 744.7 606.2Z" fill="url(#tsr-o-side-r)"/>
+      <path d="M585.7 945.7 532.7 974.9 532.7 723 744.7 606.2 744.7 660.8" fill="none" stroke="url(#tsr-o-stroke-r-hot)"/>
+      <path d="M532.7 723 320.9 606.3 532.9 489.6 744.7 606.2Z" fill="url(#tsr-o-top)" stroke="url(#tsr-o-stroke-top-hot)"/>
+    </g>
+    <!-- violet cube, upper right, with a slot under its +Y face -->
+    <g class="piece" id="p-cube-right" style="--ex:-270.5px;--ey:148.4px">
+      <path d="M1466 949.1 1512.9 974.9 1512.9 723.2 1300.7 606.3 1300.7 655.2 1466 746.3Z" fill="url(#tsr-v-shade)"/>
+      <path d="M1512.9 723.2 1725.8 606 1725.8 857.6 1512.9 974.9Z" fill="url(#tsr-v-side-r)" stroke="url(#tsr-v-stroke-r-hot)"/>
+      <path d="M1725.8 606 1512.9 723.2 1300.7 606.3 1513.6 489.1Z" fill="url(#tsr-v-top)" stroke="url(#tsr-v-stroke-top-hot)"/>
+    </g>
+    <!-- the central orange cube -->
+    <g class="piece" id="p-core" style="--ex:0px;--ey:0px">
+      <path d="M1242.5 1131.6 1023.5 1252.3 1023.5 992.3 1242.5 871.6Z" fill="url(#tsr-o-side-r)" stroke="url(#tsr-o-stroke-r-hot)"/>
+      <path d="M804.5 1131.6 1023.5 1252.3 1023.5 992.3 804.5 871.6Z" fill="url(#tsr-o-side-l)" stroke="url(#tsr-o-stroke-l-hot)"/>
+      <path d="M1023.5 751 1242.5 871.6 1023.5 992.3 804.5 871.6Z" fill="url(#tsr-o-top)" stroke="url(#tsr-o-stroke-top-hot)"/>
+    </g>
+  </g>
+  <path id="tsr-wordmark" d="M199.9 65.8H215.9V113H234.2V65.8H250.2V47H199.9ZM269.9 113H314.8V96H288.2V89.1H313V72.1H288.2V65.8H314.8V47H269.9ZM336.5 110.6C342.3 112.7 346.8 114.3 356.5 114.3C374.7 114.3 383 105.1 383 92.9C383 80.8 375.3 76.2 362.2 73.4C356.1 72.1 354.2 71.2 354.2 69.2C354.2 66.5 356.9 65.4 362 65.4C367.7 65.4 372.9 66.5 378 68.1L378.9 48.8C373.9 46.8 369.2 45.7 360.8 45.7C342.9 45.7 335.4 55.3 335.4 68.2C335.4 81.3 343.3 86.4 355.5 89C362 90.4 364.2 91.3 364.2 93.3C364.2 95.5 361.4 96.9 355.3 96.9C348.2 96.9 341.8 95.4 337.4 93.7ZM402.4 110.6C408.2 112.7 412.7 114.3 422.4 114.3C440.6 114.3 448.9 105.1 448.9 92.9C448.9 80.8 441.2 76.2 428.1 73.4C422.1 72.1 420.1 71.2 420.1 69.2C420.1 66.5 422.8 65.4 427.9 65.4C433.6 65.4 438.8 66.5 443.9 68.1L444.8 48.8C439.8 46.8 435.1 45.7 426.7 45.7C408.9 45.7 401.3 55.3 401.3 68.2C401.3 81.3 409.2 86.4 421.4 89C427.9 90.4 430.1 91.3 430.1 93.3C430.1 95.5 427.3 96.9 421.2 96.9C414.1 96.9 407.8 95.4 403.4 93.7ZM514.3 113H534.4L510.8 47H488.8L465.4 113H484.2L487.3 103.6H511.1ZM505.7 87.5H492.6L499.1 68.1ZM554.1 113H572.5V93.2L588 113H609.5L591 90.7C596 88.8 599.2 85.8 601.3 82.5C603.8 78.2 604.4 73.2 604.4 69C604.4 53.8 592.4 47 575.6 47H554.1ZM576.6 65.8C582.1 65.8 585.6 67.6 585.6 71.5C585.6 76.2 582.4 78.5 577.2 78.5H572.5V65.8ZM628.8 113H647.1V47H628.8ZM718 93.5C714.4 95.6 710.2 96.8 705.2 96.8C694 96.8 687.4 91.4 687.4 81.3C687.4 71.6 694.3 65.4 705.5 65.4C710.3 65.4 714.4 66.2 718 68.1L719.3 48.8C714.9 46.9 709.4 45.7 703.6 45.7C683.8 45.7 668.6 58.5 668.6 80.1C668.6 102.8 683.9 114.2 703.2 114.2C709.2 114.2 714.6 112.9 719.4 110.4Z" fill="url(#tsr-word)" stroke="url(#tsr-word-edge)" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>

@@ -1,5 +1,5 @@
-name: Tessaric verify
-description: Prove what your code does in CI. Runs tessaric verify, annotates the pull request and writes the report to the job summary.
+name: Tessaric
+description: Proves what your code does, on every pull request. One short comment, notes on the lines that can fail, the full report on the run page.
 author: tessariclabs
 branding:
   icon: check-circle
@@ -16,19 +16,25 @@ inputs:
     description: The workspace directory, relative to the checkout.
     default: .
   baselines:
-    description: A file written by tessaric export, relative to the workspace, imported before verify so linked items have their baselines on a fresh checkout. Empty imports nothing.
+    description: A file written by tessaric export, relative to the workspace, imported before verify.
     default: ""
   shard:
-    description: Run only shard I of N of the tests, as I/N (for example 1/4). Empty runs every test.
+    description: Run only shard I of N of the tests, as I/N (for example 1/4).
     default: ""
   nothing-proved:
     description: What a run that proved nothing yet (exit 3) does to the step, fail or pass.
     default: fail
+  comment:
+    description: Keep one comment on the pull request, edited on every run. Needs permissions pull-requests write.
+    default: "true"
   annotations:
-    description: Annotate the changed files with what can fail, the checks that failed and the drift.
+    description: Note on the changed lines what can fail (at most 10).
     default: "true"
   summary:
-    description: Write tessaric report --format markdown to the job summary.
+    description: Write the full report to the run's summary page.
+    default: "true"
+  upload-report:
+    description: Keep the report as files on the run (tessaric-report.md and tessaric-report.json).
     default: "true"
   cache:
     description: Keep the binary, the toolchains, the dependencies and the workspace state between runs.
@@ -36,7 +42,7 @@ inputs:
 
 outputs:
   exit-code:
-    description: The exit code of tessaric verify (0 ok, 1 a check failed or an obligation can fail, 2 could not determine, 3 nothing was checked or nothing was proved yet, 130 interrupted).
+    description: The exit code of tessaric verify (0 ok, 1 a check failed or an obligation can fail, 2 could not determine, 3 nothing proved yet, 130 interrupted).
     value: ${{ steps.verify.outputs.exit-code }}
   version:
     description: The tessaric release that ran.
@@ -51,25 +57,32 @@ runs:
       env:
         VERSION: ${{ inputs.version }}
         WORKSPACE: ${{ inputs.workspace }}
+        SHARD: ${{ inputs.shard }}
       run: |
         case "$RUNNER_OS/$RUNNER_ARCH" in
           Linux/X64) target=x86_64-unknown-linux-gnu; ext=tgz ;;
           Linux/ARM64) target=aarch64-unknown-linux-gnu; ext=tgz ;;
           macOS/ARM64) target=aarch64-apple-darwin; ext=tgz ;;
           Windows/X64) target=x86_64-pc-windows-gnullvm; ext=zip ;;
-          *) echo "::error title=tessaric::tessaric publishes no binary for $RUNNER_OS $RUNNER_ARCH"; exit 2 ;;
+          *) echo "::error title=Tessaric::no Tessaric release for $RUNNER_OS $RUNNER_ARCH"; exit 2 ;;
         esac
         repo="https://github.com/tessariclabs/releases"
         if [ "$VERSION" = latest ]; then
           # the redirect GitHub answers, so no API call and no rate limit
           tag=$(curl -fsSIL -o /dev/null -w '%{url_effective}' "$repo/releases/latest")
           tag="${tag##*/}"
-          case "$tag" in v[0-9]*) ;; *) echo "::error title=tessaric::no tessaric release is published yet"; exit 2 ;; esac
+          case "$tag" in v[0-9]*) ;; *) echo "::error title=Tessaric::no Tessaric release is published yet"; exit 2 ;; esac
         else
           tag="v${VERSION#v}"
         fi
         home="$HOME/.tessaric-home"
         mkdir -p "$home"
+        name=tessaric-report
+        [ "$WORKSPACE" = . ] || name="$name-$(printf '%s' "$WORKSPACE" | tr -c 'A-Za-z0-9_-' '-')"
+        [ -z "$SHARD" ] || name="$name-$(printf '%s' "$SHARD" | tr '/' '-')"
+        sha=$(jq -r '.pull_request.head.sha // empty' "$GITHUB_EVENT_PATH" 2>/dev/null || true)
+        art="https://raw.githubusercontent.com/tessariclabs/run/master/assets"
+        pic() { printf '<picture><source media="(prefers-color-scheme: dark)" srcset="%s/tessaric-banner.png"><img src="%s/tessaric-banner-light.png" alt="TESSARIC" height="%s" align="top"></picture>' "$art" "$art" "$1"; }
         {
           echo "target=$target"
           echo "ext=$ext"
@@ -78,10 +91,25 @@ runs:
           echo "home=$home"
           echo "bin=$home/bin-$tag"
           echo "branch=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
+          echo "report-name=$name"
         } >> "$GITHUB_OUTPUT"
-        # A pinned version stays pinned, and CI never updates tessaric in place.
-        echo "TESSARIC_NO_UPDATE=1" >> "$GITHUB_ENV"
+        {
+          echo "TESSARIC_KEY=$WORKSPACE:$SHARD"
+          echo "TESSARIC_SHA=${sha:-$GITHUB_SHA}"
+          echo "TESSARIC_BANNER=$(pic 20)"
+          echo "TESSARIC_BANNER_LARGE=$(pic 28)"
+          echo "REPORT_DIR=$RUNNER_TEMP/tessaric-report"
+          # a pinned version stays pinned, and CI never updates tessaric in place
+          echo "TESSARIC_NO_UPDATE=1"
+        } >> "$GITHUB_ENV"
         if [ "$VERSION" != latest ]; then echo "TESSARIC_PINNED_VERSION=$tag" >> "$GITHUB_ENV"; fi
+
+    - name: Mark the comment as verifying
+      if: inputs.comment == 'true'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/comment.sh" running
 
     # Five cache layers, each keyed by what changes it, so a later run downloads, unpacks,
     # fetches and proves again only what changed.
@@ -92,9 +120,8 @@ runs:
       with:
         path: ${{ steps.release.outputs.bin }}
         key: tessaric-bin-${{ runner.os }}-${{ runner.arch }}-${{ steps.release.outputs.tag }}
-
-    # Toolchain components are stored by their content, so an earlier version's cache still
-    # serves every component the new version shares with it.
+    # toolchain components are stored by their content, so an earlier version's cache still
+    # serves every component the new version shares with it
     - name: Restore the toolchains
       id: cache-toolchains
       if: inputs.cache == 'true'
@@ -106,7 +133,6 @@ runs:
           ${{ steps.release.outputs.home }}/c-target
         key: tessaric-toolchains-${{ runner.os }}-${{ runner.arch }}-${{ steps.release.outputs.tag }}
         restore-keys: tessaric-toolchains-${{ runner.os }}-${{ runner.arch }}-
-
     - name: Restore the dependencies
       id: cache-deps
       if: inputs.cache == 'true'
@@ -117,7 +143,6 @@ runs:
           ${{ steps.release.outputs.home }}/store/go
         key: tessaric-deps-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles(format('{0}/**/Cargo.lock', inputs.workspace), format('{0}/**/go.sum', inputs.workspace), format('{0}/**/package-lock.json', inputs.workspace), format('{0}/**/yarn.lock', inputs.workspace), format('{0}/**/pnpm-lock.yaml', inputs.workspace), format('{0}/**/poetry.lock', inputs.workspace), format('{0}/**/uv.lock', inputs.workspace), format('{0}/**/requirements*.txt', inputs.workspace), format('{0}/**/pom.xml', inputs.workspace), format('{0}/**/*.gradle*', inputs.workspace), format('{0}/**/packages.lock.json', inputs.workspace)) }}
         restore-keys: tessaric-deps-${{ runner.os }}-${{ runner.arch }}-
-
     - name: Restore the store
       id: cache-store
       if: inputs.cache == 'true'
@@ -130,7 +155,6 @@ runs:
         restore-keys: |
           tessaric-store-${{ runner.os }}-${{ runner.arch }}-${{ steps.release.outputs.branch }}-
           tessaric-store-${{ runner.os }}-${{ runner.arch }}-${{ github.event.repository.default_branch }}-
-
     - name: Restore the workspace state
       id: cache-state
       if: inputs.cache == 'true'
@@ -144,7 +168,7 @@ runs:
           tessaric-state-${{ runner.os }}-${{ runner.arch }}-${{ steps.release.outputs.branch }}-
           tessaric-state-${{ runner.os }}-${{ runner.arch }}-${{ github.event.repository.default_branch }}-
 
-    - name: Install tessaric
+    - name: Install Tessaric
       shell: bash
       env:
         BASE: ${{ steps.release.outputs.base }}
@@ -159,14 +183,14 @@ runs:
           tmp="$RUNNER_TEMP/tessaric-download"
           mkdir -p "$tmp"
           if ! curl -fsSL --retry 3 -o "$tmp/$archive" "$BASE/$archive"; then
-            echo "::error title=tessaric::release $(basename "$BASE") has no $archive for this runner"
+            echo "::error title=Tessaric::release $(basename "$BASE") has no $archive for this runner"
             exit 2
           fi
           curl -fsSL --retry 3 -o "$tmp/$archive.sha256" "$BASE/$archive.sha256"
           want=$(cut -d ' ' -f 1 "$tmp/$archive.sha256" | head -n 1)
           if command -v sha256sum >/dev/null; then got=$(sha256sum "$tmp/$archive" | cut -d ' ' -f 1); else got=$(shasum -a 256 "$tmp/$archive" | cut -d ' ' -f 1); fi
           if [ -z "$want" ] || [ "$want" != "$got" ]; then
-            echo "::error title=tessaric::checksum mismatch for $archive: expected '$want', got '$got'"
+            echo "::error title=Tessaric::checksum mismatch for $archive"
             exit 2
           fi
           if [ "$EXT" = zip ]; then unzip -q -o "$tmp/$archive" -d "$DIR"; else tar -xzf "$tmp/$archive" -C "$DIR"; fi
@@ -183,15 +207,11 @@ runs:
         ARGS: ${{ inputs.args }}
         SHARD: ${{ inputs.shard }}
         BASELINES: ${{ inputs.baselines }}
-        SUMMARY: ${{ inputs.summary }}
-        ANNOTATIONS: ${{ inputs.annotations }}
       run: |
         tessaric toolchain unpack >/dev/null
-        if [ -n "$BASELINES" ]; then
-          tessaric --workspace "$WORKSPACE" import "$WORKSPACE/$BASELINES"
-        fi
+        [ -z "$BASELINES" ] || tessaric --workspace "$WORKSPACE" import "$WORKSPACE/$BASELINES"
         set +e
-        # ARGS is split on purpose: it is a list of extra flags.
+        # ARGS is split on purpose: it is a list of extra flags
         if [ -n "$SHARD" ]; then
           tessaric --workspace "$WORKSPACE" verify --shard "$SHARD" $ARGS
         else
@@ -200,33 +220,36 @@ runs:
         code=$?
         set -e
         echo "exit-code=$code" >> "$GITHUB_OUTPUT"
-        if [ "$ANNOTATIONS" = true ] && [ "$code" != 2 ] && [ "$code" != 130 ]; then
-          # One annotation per entry of what needs attention, at its file and line (GitHub shows
-          # the first 50 of a job; the summary below has every entry).
-          prefix=""
-          [ "$WORKSPACE" = . ] || prefix="${WORKSPACE%/}/"
-          list="$RUNNER_TEMP/tessaric-attention.jsonl"
-          if tessaric --workspace "$WORKSPACE" --quiet attention --format json > "$list" 2>/dev/null; then
-            # workflow commands escape % and line breaks in the message, and : and , in a property
-            tail -n +2 "$list" | head -n 50 | jq -r --arg p "$prefix" '
-                def data: gsub("%"; "%25") | gsub("\r"; "%0D") | gsub("\n"; "%0A");
-                def prop: data | gsub(":"; "%3A") | gsub(","; "%2C");
-                (if .group == "can_fail" or .group == "checks_failed" then "error"
-                 elif .group == "drift" then "warning" else "notice" end) as $level
-                | (if .file then " file=\("\($p)\(.file)" | prop)" + (if .line then ",line=\(.line)" else "" end) + "," else " " end) as $at
-                | "::\($level)\($at)title=\("tessaric, \({"can_fail": "can fail", "checks_failed": "check failed", "drift": "drift", "tessaric": "a problem in tessaric, not in your code"}[.group] // .group): \(.kind)" | prop)::\("\(.title): \(.sentence)" | data)"' || true
-          else
-            echo "::notice title=tessaric::this release cannot list what needs attention, so nothing is annotated"
-          fi
-        fi
-        if [ "$SUMMARY" = true ]; then
-          if ! tessaric --workspace "$WORKSPACE" --quiet report --format markdown >> "$GITHUB_STEP_SUMMARY"; then
-            echo "tessaric could not write a report (verify exited $code)" >> "$GITHUB_STEP_SUMMARY"
-          fi
-        fi
+        mkdir -p "$REPORT_DIR"
+        q() { tessaric --workspace "$WORKSPACE" --quiet "$@"; }
+        q report --format markdown > "$REPORT_DIR/tessaric-report.md" 2>/dev/null || rm -f "$REPORT_DIR/tessaric-report.md"
+        q report --format json > "$REPORT_DIR/tessaric-report.json" 2>/dev/null || rm -f "$REPORT_DIR/tessaric-report.json"
+        q attention --group can_fail --format json > "$REPORT_DIR/attention.jsonl" 2>/dev/null || rm -f "$REPORT_DIR/attention.jsonl"
 
-    # The caches are saved before the result decides the step, so a failing run still keeps
-    # what it built. A layer keyed by content is saved only when it was not restored exactly.
+    - name: Publish the result
+      if: steps.verify.outputs.exit-code != ''
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        CODE: ${{ steps.verify.outputs.exit-code }}
+        WORKSPACE: ${{ inputs.workspace }}
+        ANNOTATIONS: ${{ inputs.annotations }}
+        SUMMARY: ${{ inputs.summary }}
+        COMMENT: ${{ inputs.comment }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/publish.sh"
+
+    - name: Keep the report
+      if: inputs.upload-report == 'true' && steps.verify.outputs.exit-code != ''
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.release.outputs.report-name }}
+        path: |
+          ${{ runner.temp }}/tessaric-report/tessaric-report.md
+          ${{ runner.temp }}/tessaric-report/tessaric-report.json
+        if-no-files-found: ignore
+
+    # The caches are saved before the result decides the step, so a failing run keeps what it
+    # built. A layer keyed by content is saved only when it was not restored exactly.
     - name: Save the binary
       if: inputs.cache == 'true' && steps.cache-bin.outputs.cache-hit != 'true'
       uses: actions/cache/save@v4
@@ -275,7 +298,7 @@ runs:
       run: |
         case "$CODE" in
           0) exit 0 ;;
-          3) if [ "$NOTHING_PROVED" = pass ]; then echo "::warning title=tessaric::nothing was proved yet (exit 3); the step passes because nothing-proved is pass"; exit 0; fi
-             echo "::error title=tessaric::nothing was proved yet (exit 3)"; exit 3 ;;
+          3) if [ "$NOTHING_PROVED" = pass ]; then exit 0; fi
+             echo "::error title=Tessaric::nothing proved yet (exit 3)"; exit 3 ;;
           *) exit "$CODE" ;;
         esac
