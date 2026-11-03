@@ -1,5 +1,5 @@
-name: Tessaric
-description: Proves what your code does, on every pull request. One short comment, notes on the lines that can fail, the full report on the run page.
+name: Tessaric Verify
+description: "Mathematical proof on every pull request: no panics, no undefined behaviour, and the exact input when something breaks."
 author: tessariclabs
 branding:
   icon: check-circle
