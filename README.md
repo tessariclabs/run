@@ -31,4 +31,13 @@ steps:
 | `nothing-proved` | `fail` | `pass` lets a run that proved nothing yet pass |
 | `comment`, `annotations`, `summary`, `upload-report`, `cache` | `true` | turn a part off |
 
-Output `exit-code`: 0 ok, 1 something can fail or a check failed, 2 could not determine, 3 nothing proved yet. Runs on Linux x86_64 runners. Docs: [tessaric.io/docs/ci](https://tessaric.io/docs/ci)
+| Output `exit-code` | Meaning |
+| --- | --- |
+| 0 | ok |
+| 1 | something can fail, or a check failed |
+| 2 | could not determine |
+| 3 | nothing proved yet |
+
+| Runners | Docs |
+| --- | --- |
+| Linux x86_64 | [tessaric.io/docs/ci](https://tessaric.io/docs/ci) |
